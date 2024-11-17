@@ -91,19 +91,20 @@
     No hay registros de fabricante
     <% } %>
 
-    <form>
+    <form method="get" action="${pageContext.request.contextPath}/tienda/fabricantes/">
         <fieldset>
-            <legend>Filtrar por:</legend>
-            <select>
-                <option>Nombre</option>
-                <option>Código</option>
-            </select>
-            <select>
-                <option>Ascendente</option>
-                <option>Descendente</option>
+            <legend>Ordenar por</legend>
+            <select name="ordenarPor" id="ordenarPor">
+                <option value="nombre">Nombre</option>
+                <option value="codigo">Código</option>
             </select>
 
-            <button>Aplicar</button>
+            <select name="modoOrdenar" id="modoOrdenar">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+
+            <button type="submit" id="botonFinal">Aplicarlo</button>
         </fieldset>
     </form>
 </div>

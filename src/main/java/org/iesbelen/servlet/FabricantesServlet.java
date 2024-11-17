@@ -40,18 +40,60 @@ public class FabricantesServlet extends HttpServlet {
 
         if (pathInfo == null || "/".equals(pathInfo)) {
 
+            // Esto es para los botones de ordenar por nombre y código, de forma ascendente o descendente
+            // Obtener los parámetros de la URL
+            String ordenarPor = request.getParameter("ordenarPor");
+            String modoOrdenar = request.getParameter("modoOrdenar");
+
+            // Establecer los valores predeterminados si no se pasan parámetros
+            if (ordenarPor == null && modoOrdenar == null) {
+                ordenarPor = "nombre";
+                modoOrdenar = "asc";
+            }
+
             FabricanteDAO fabDAO = new FabricanteDAOImpl();
 
             //GET
             //	/fabricantes/
             //	/fabricantes
 
+            // Crear el DAO y obtener la lista de fabricantes
             List<Fabricante> fab = fabDAO.getAll();
+
+
+            // No va a ser nulo porque ya lo he controlado arriba.
+            switch (ordenarPor) {
+
+                case "nombre":
+                    switch (modoOrdenar) {
+                        case "asc":
+                            fab.sort(Comparator.comparing(Fabricante::getNombre));
+                            break;
+                        case "desc":
+                            fab.sort(Comparator.comparing(Fabricante::getNombre).reversed());
+                            break;
+                    }
+                    break;
+
+                case "codigo":
+                    switch (modoOrdenar) {
+                        case "asc":
+                            fab.sort(Comparator.comparing(Fabricante::getIdFabricante));
+                            break;
+                        case "desc":
+                            fab.sort(Comparator.comparing(Fabricante::getIdFabricante).reversed());
+                            break;
+                    }
+                    break;
+            }
+
+            // Convertir la lista de fabricantes a DTO
             List<FabricanteDTO> listaFabricantesDTO = fab.stream()
                     .map(fabricante -> new FabricanteDTO(fabricante, fabDAO.getCountProductos(fabricante.getIdFabricante()).orElse(0)
                     ))
                     .toList();
 
+            // Pasar los datos a la vista
             request.setAttribute("listaFabricantes", listaFabricantesDTO);
             dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/fabricantes/fabricantes.jsp");
 
@@ -126,12 +168,12 @@ public class FabricantesServlet extends HttpServlet {
 
         } else if (__method__ != null && "put".equalsIgnoreCase(__method__)) {
             // Actualizar uno existente
-            //Dado que los forms de html sólo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización PUT.
+            //Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización PUT.
             doPut(request, response);
 
         } else if (__method__ != null && "delete".equalsIgnoreCase(__method__)) {
             // Borrar uno existente
-            //Dado que los forms de html sólo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
+            //Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
             doDelete(request, response);
         } else {
             System.out.println("Opción POST no soportada.");
