@@ -67,13 +67,16 @@
             <%= fabricante.getNumProducto() %>
         </div>
         <div style="float: none; width: auto; overflow: hidden;">
-            <form action="${pageContext.request.contextPath}/tienda/fabricantes/<%= fabricante.getIdFabricante() %>" style="display: inline;">
+            <form action="${pageContext.request.contextPath}/tienda/fabricantes/<%= fabricante.getIdFabricante() %>"
+                  style="display: inline;">
                 <input type="submit" value="Ver Detalle"/>
             </form>
-            <form action="${pageContext.request.contextPath}/tienda/fabricantes/editar/<%= fabricante.getIdFabricante() %>" style="display: inline;">
+            <form action="${pageContext.request.contextPath}/tienda/fabricantes/editar/<%= fabricante.getIdFabricante() %>"
+                  style="display: inline;">
                 <input type="submit" value="Editar"/>
             </form>
-            <form action="${pageContext.request.contextPath}/tienda/fabricantes/borrar/" method="post" style="display: inline;">
+            <form action="${pageContext.request.contextPath}/tienda/fabricantes/borrar/" method="post"
+                  style="display: inline;">
                 <input type="hidden" name="__method__" value="delete"/>
                 <input type="hidden" name="codigo" value="<%= fabricante.getIdFabricante() %>"/>
                 <input type="submit" value="Eliminar"/>

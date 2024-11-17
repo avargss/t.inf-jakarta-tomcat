@@ -19,33 +19,33 @@ import java.util.List;
 public class ProductosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * HTTP Method: GET
-	 * Paths: 
+	 * Paths:
 	 * 		/productos/
 	 * 		/productos/{id}
 	 * 		/productos/editar{id}
 	 * 		/productos/crear
-	 */		
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		RequestDispatcher dispatcher;
-				
+
 		String pathInfo = request.getPathInfo(); //
-			
+
 		if (pathInfo == null || "/".equals(pathInfo)) {
-			ProductoDAO fabDAO = new ProductoDAOImpl();
-			
-			//GET 
+			ProductoDAO prodDAO = new ProductoDAOImpl();
+
+			//GET
 			//	/productos/
 			//	/productos
-			
-			request.setAttribute("listaProductos", fabDAO.getAll());
+
+			request.setAttribute("listaProductos", prodDAO.getAll());
 			dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/productos.jsp");
-			        		       
+
 		} else {
 			// GET
 			// 		/productos/{id}
@@ -54,12 +54,12 @@ public class ProductosServlet extends HttpServlet {
 			// 		/productos/edit/{id}/
 			// 		/productos/crear
 			// 		/productos/crear/
-			
+
 			pathInfo = pathInfo.replaceAll("/$", "");
 			String[] pathParts = pathInfo.split("/");
-			
+
 			if (pathParts.length == 2 && "crear".equals(pathParts[1])) {
-				
+
 				// GET
 				// /productos/crear
 
@@ -69,53 +69,53 @@ public class ProductosServlet extends HttpServlet {
 
 				request.setAttribute("listaFabricantes", listaFab);
 				dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/crear-producto.jsp");
-        												
-			
+
+
 			} else if (pathParts.length == 2) {
-				ProductoDAO fabDAO = new ProductoDAOImpl();
+				ProductoDAO prodDAO = new ProductoDAOImpl();
 				// GET
 				// /productos/{id}
 				try {
-					request.setAttribute("producto",fabDAO.find(Integer.parseInt(pathParts[1])));
+					request.setAttribute("producto",prodDAO.find(Integer.parseInt(pathParts[1])));
 					dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/detalle-producto.jsp");
 
 				} catch (NumberFormatException nfe) {
 					nfe.printStackTrace();
 					dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/productos.jsp");
 				}
-				
+
 			} else if (pathParts.length == 3 && "editar".equals(pathParts[1]) ) {
-				ProductoDAO fabDAO = new ProductoDAOImpl();
-				
+				ProductoDAO prodDAO = new ProductoDAOImpl();
+
 				// GET
 				// /productos/editar/{id}
 				try {
-					request.setAttribute("producto",fabDAO.find(Integer.parseInt(pathParts[2])));
-					dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/editar-producto.jsp");
-					        								
+					request.setAttribute("producto",prodDAO.find(Integer.parseInt(pathParts[2])));
+					dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/editar-producto.jsp");
+
 				} catch (NumberFormatException nfe) {
 					nfe.printStackTrace();
 					dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/productos.jsp");
 				}
-				
-				
+
+
 			} else {
-				
+
 				System.out.println("Opción POST no soportada.");
 				dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/productos.jsp");
-			
+
 			}
-			
+
 		}
-		
+
 		dispatcher.forward(request, response);
-			 
+
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		RequestDispatcher dispatcher;
 		String __method__ = request.getParameter("__method__");
 
@@ -131,13 +131,13 @@ public class ProductosServlet extends HttpServlet {
 			nuevoProd.setPrecio(precio);
 			nuevoProd.setCodigo_fabricante(idFabricante);
 			prodDAO.create(nuevoProd);
-			
-		} else if (__method__ != null && "put".equalsIgnoreCase(__method__)) {			
+
+		} else if (__method__ != null && "put".equalsIgnoreCase(__method__)) {
 			// Actualizar uno existente
 			//Dado que los forms de html sólo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización PUT.
 			doPut(request, response);
 
-		} else if (__method__ != null && "delete".equalsIgnoreCase(__method__)) {			
+		} else if (__method__ != null && "delete".equalsIgnoreCase(__method__)) {
 			// Actualizar uno existente
 			//Dado que los forms de html sólo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
 			doDelete(request, response);
@@ -149,43 +149,43 @@ public class ProductosServlet extends HttpServlet {
 		//response.sendRedirect("../../../tienda/productos");
 		response.sendRedirect(request.getContextPath() + "/tienda/productos");
 	}
-	
-	
+
+
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		ProductoDAO fabDAO = new ProductoDAOImpl();
+
+		ProductoDAO prodDAO = new ProductoDAOImpl();
 		String codigo = request.getParameter("codigo");
 		String nombre = request.getParameter("nombre");
-		Producto fab = new Producto();
-		
+		double precio = Double.parseDouble(request.getParameter("precio"));
+		Producto prod = new Producto();
+
 		try {
-			
 			int id = Integer.parseInt(codigo);
-			fab.setIdProducto(id);
-			fab.setNombre(nombre);
-			fabDAO.update(fab);
-			
+			prod.setIdProducto(id);
+			prod.setNombre(nombre);
+            prod.setPrecio(precio);
+			prodDAO.update(prod);
+
 		} catch (NumberFormatException nfe) {
 			nfe.printStackTrace();
 		}
-		
 	}
-	
+
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 	{
 		RequestDispatcher dispatcher;
-		ProductoDAO fabDAO = new ProductoDAOImpl();
+		ProductoDAO prodDAO = new ProductoDAOImpl();
 		String codigo = request.getParameter("codigo");
-		
+
 		try {
-			
+
 			int id = Integer.parseInt(codigo);
-		
-		fabDAO.delete(id);
-			
+
+			prodDAO.delete(id);
+
 		} catch (NumberFormatException nfe) {
 			nfe.printStackTrace();
 		}

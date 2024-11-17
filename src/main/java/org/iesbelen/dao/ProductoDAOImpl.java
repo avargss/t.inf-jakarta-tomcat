@@ -148,7 +148,7 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
         try {
             conn = connectDB();
 
-            ps = conn.prepareStatement("UPDATE producto SET nombre = ?,precio = ?  WHERE idProducto = ?");
+            ps = conn.prepareStatement("UPDATE productos SET nombre = ?,precio = ?  WHERE idProducto = ?");
             int idx = 1;
             ps.setString(idx++, producto.getNombre());
             ps.setDouble(idx++, producto.getPrecio());
@@ -157,7 +157,7 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
             int rows = ps.executeUpdate();
 
             if (rows == 0)
-                System.out.println("Update de fabricante con 0 registros actualizados.");
+                System.out.println("Update de producto con 0 registros actualizados.");
 
         } catch (SQLException e) {
             e.printStackTrace();
