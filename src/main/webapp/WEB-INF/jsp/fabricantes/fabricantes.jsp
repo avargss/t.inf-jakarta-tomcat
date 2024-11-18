@@ -29,7 +29,6 @@
                 <form action="${pageContext.request.contextPath}/tienda/fabricantes/crear">
                     <input type="submit" value="Crear">
                 </form>
-
             </div>
         </div>
     </div>

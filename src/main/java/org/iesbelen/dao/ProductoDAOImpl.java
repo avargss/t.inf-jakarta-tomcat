@@ -201,4 +201,14 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
 
     }
 
+    /*@Override
+    public List<Producto> busquedaPorNombre(String name) {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM productos WHERE nombre LIKE ?";
+
+        try {
+            Connection conn = Conexion.getConnection;
+        }
+    }*/
+
 }

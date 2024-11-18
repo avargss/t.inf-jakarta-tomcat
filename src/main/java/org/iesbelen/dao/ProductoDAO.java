@@ -13,4 +13,6 @@ public interface ProductoDAO {
 	public void update(Producto producto);
 	public void delete(int id);
 
+	public List<Producto> busquedaPorNombre(String name);
+
 }

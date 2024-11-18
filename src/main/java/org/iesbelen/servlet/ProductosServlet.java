@@ -40,17 +40,21 @@ public class ProductosServlet extends HttpServlet {
 
 			String busqueda = request.getParameter("busqueda");
 
-			if (busqueda != null && !busqueda.trim().isEmpty()) {
-				// Filtrar los productos por el nombre
-				request.setAttribute("listaProductos", //Terminar de chatgpt);
-			}
+			List<Producto> listaProductos = prodDAO.getAll(); // Obtiene la lista de todos los productos
 
+			if (busqueda != null && !busqueda.trim().isEmpty()) {
+				listaProductos = listaProductos.stream()
+						.filter(producto -> producto.getNombre().toLowerCase().contains(busqueda.trim().toLowerCase()))
+						.toList();
+			}
 			//GET
 			//	/productos/
 			//	/productos
 
+			// Enviar la lista (filtrada o completa) a la vista
 			request.setAttribute("listaProductos", prodDAO.getAll());
 			dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/productos.jsp");
+			dispatcher.forward(request, response);
 
 		} else {
 			// GET
