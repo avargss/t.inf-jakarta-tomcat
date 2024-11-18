@@ -60,7 +60,6 @@ public class FabricantesServlet extends HttpServlet {
             // Crear el DAO y obtener la lista de fabricantes
             List<Fabricante> fab = fabDAO.getAll();
 
-
             // No va a ser nulo porque ya lo he controlado arriba.
             switch (ordenarPor) {
 

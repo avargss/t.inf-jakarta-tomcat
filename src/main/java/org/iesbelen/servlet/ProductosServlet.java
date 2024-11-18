@@ -33,11 +33,17 @@ public class ProductosServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		RequestDispatcher dispatcher;
-
 		String pathInfo = request.getPathInfo(); //
 
 		if (pathInfo == null || "/".equals(pathInfo)) {
 			ProductoDAO prodDAO = new ProductoDAOImpl();
+
+			String busqueda = request.getParameter("busqueda");
+
+			if (busqueda != null && !busqueda.trim().isEmpty()) {
+				// Filtrar los productos por el nombre
+				request.setAttribute("listaProductos", //Terminar de chatgpt);
+			}
 
 			//GET
 			//	/productos/
@@ -69,7 +75,6 @@ public class ProductosServlet extends HttpServlet {
 
 				request.setAttribute("listaFabricantes", listaFab);
 				dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/crear-producto.jsp");
-
 
 			} else if (pathParts.length == 2) {
 				ProductoDAO prodDAO = new ProductoDAOImpl();
@@ -124,8 +129,8 @@ public class ProductosServlet extends HttpServlet {
 			ProductoDAO prodDAO = new ProductoDAOImpl();
 
 			String nombre = request.getParameter("nombre");
-			Double precio = Double.parseDouble(request.getParameter("precio"));
-			Integer idFabricante = Integer.parseInt(request.getParameter("selecFabricante"));
+			double precio = Double.parseDouble(request.getParameter("precio"));
+			int idFabricante = Integer.parseInt(request.getParameter("selecFabricante"));
 			Producto nuevoProd = new Producto();
 			nuevoProd.setNombre(nombre);
 			nuevoProd.setPrecio(precio);
