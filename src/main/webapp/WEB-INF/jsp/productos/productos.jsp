@@ -27,8 +27,8 @@
 
         <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
 
-            <form action="${pageContext.request.contextPath}/tienda/productos">
-                <input type="text" name="search" placeholder="Buscar producto..." value="${param.search}">
+            <form method="get" action="${pageContext.request.contextPath}/tienda/productos">
+                <input type="text" name="search" placeholder="Buscar producto...">
                 <button type="submit">Buscar</button>
             </form>
 

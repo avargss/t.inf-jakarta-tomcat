@@ -38,23 +38,22 @@ public class ProductosServlet extends HttpServlet {
 		if (pathInfo == null || "/".equals(pathInfo)) {
 			ProductoDAO prodDAO = new ProductoDAOImpl();
 
-			String busqueda = request.getParameter("busqueda");
+			String search = request.getParameter("search");
 
-			List<Producto> listaProductos = prodDAO.getAll(); // Obtiene la lista de todos los productos
+			List<Producto> listaProductos; // Obtiene la lista de todos los productos
 
-			if (busqueda != null && !busqueda.trim().isEmpty()) {
-				listaProductos = listaProductos.stream()
-						.filter(producto -> producto.getNombre().toLowerCase().contains(busqueda.trim().toLowerCase()))
-						.toList();
+			if (search != null && !search.trim().isEmpty()) {
+				listaProductos = prodDAO.busquedaPorNombre(search);
+			} else {
+				listaProductos = prodDAO.getAll();
 			}
 			//GET
 			//	/productos/
 			//	/productos
 
 			// Enviar la lista (filtrada o completa) a la vista
-			request.setAttribute("listaProductos", prodDAO.getAll());
+			request.setAttribute("listaProductos", listaProductos);
 			dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/productos/productos.jsp");
-			dispatcher.forward(request, response);
 
 		} else {
 			// GET

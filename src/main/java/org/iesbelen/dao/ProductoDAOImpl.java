@@ -9,6 +9,44 @@ import java.util.Optional;
 
 public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
 
+    @Override
+    public List<Producto> busquedaPorNombre(String name) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM productos WHERE nombre LIKE ?";
+
+        try {
+            conn = connectDB();
+
+            // Se utiliza un objeto Statement dado que no hay parámetros en la consulta.
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + name + "%");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Producto prod = new Producto();
+                int idx = 1;
+                prod.setIdProducto(rs.getInt(idx++));
+                prod.setNombre(rs.getString(idx++));
+                prod.setPrecio(rs.getDouble(idx++));
+                prod.setCodigo_fabricante(rs.getInt(idx));
+                productos.add(prod);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeDb(conn, ps, rs);
+        }
+
+        return productos;
+    }
+
     /**
      * Inserta en base de datos el nuevo fabricante, actualizando el id en el bean fabricante.
      */
@@ -201,14 +239,6 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
 
     }
 
-    /*@Override
-    public List<Producto> busquedaPorNombre(String name) {
-        List<Producto> productos = new ArrayList<>();
-        String sql = "SELECT * FROM productos WHERE nombre LIKE ?";
 
-        try {
-            Connection conn = Conexion.getConnection;
-        }
-    }*/
 
 }
