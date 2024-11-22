@@ -11,16 +11,24 @@
             justify-content: center;
         }
     </style>
+    <%@include file="WEB-INF/jsp/fragmentos/estilos.jspf" %>
 </head>
 <body>
 
+<%@ include file="WEB-INF/jsp/fragmentos/estilos.jspf" %>
 <%@ include file="/WEB-INF/jsp/fragmentos/header.jspf" %>
 <%@ include file="/WEB-INF/jsp/fragmentos/nav.jspf" %>
 
-<div class="d-grid gap-2" style="margin: 100px 100px 210px 100px" id="contenedor">
-    <a class="btn btn-primary btn-lg" href="<%=application.getContextPath()%>/tienda/fabricantes">FABRICANTES</a>
-    <a class="btn btn-success btn-lg" href="<%=application.getContextPath()%>/tienda/productos">PRODUCTOS</a>
-</div>
+<main>
+    <section>
+        <div class="d-grid gap-2" style="margin: 100px 100px 210px 100px" id="contenedor">
+            <a class="btn btn-primary btn-lg"
+               href="<%=application.getContextPath()%>/tienda/fabricantes">FABRICANTES</a>
+            <a class="btn btn-success btn-lg" href="<%=application.getContextPath()%>/tienda/productos">PRODUCTOS</a>
+        </div>
+    </section>
+</main>
+
 
 <%@include file="boostrap.jspf" %>
 <%@ include file="/WEB-INF/jsp/fragmentos/footer.jspf" %>

@@ -22,7 +22,10 @@
             align-items: center;
             justify-content: center;
         }
+
+        <%@ include file="../fragmentos/estilos.jspf" %>
     </style>
+
 </head>
 <body>
 
