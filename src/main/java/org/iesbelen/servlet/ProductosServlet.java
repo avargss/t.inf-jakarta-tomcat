@@ -33,7 +33,7 @@ public class ProductosServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		RequestDispatcher dispatcher;
-		String pathInfo = request.getPathInfo(); //
+		String pathInfo = request.getPathInfo();
 
 		if (pathInfo == null || "/".equals(pathInfo)) {
 			ProductoDAO prodDAO = new ProductoDAOImpl();

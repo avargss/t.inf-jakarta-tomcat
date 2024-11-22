@@ -10,7 +10,7 @@ public interface FabricanteDAO {
 		
 	public void create(Fabricante fabricante);
 	public List<Fabricante> getAll();
-	public Optional<Fabricante>  find(int id);
+	public Optional<Fabricante> find(int id);
 	public void update(Fabricante fabricante);
 	public void delete(int id);
 

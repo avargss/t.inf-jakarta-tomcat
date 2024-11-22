@@ -5,7 +5,7 @@
   Time: 9:42
   To change this template use File | Settings | File Templates.
 --%>
-
+<style>
     .head1 {
         font-size:40px;
         color:#009900;
@@ -58,3 +58,4 @@
     .body_sec {
         margin-left:20px;
     }
+</style>

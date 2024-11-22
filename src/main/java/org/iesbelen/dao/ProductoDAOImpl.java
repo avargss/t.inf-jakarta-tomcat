@@ -48,7 +48,7 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
     }
 
     /**
-     * Inserta en base de datos el nuevo fabricante, actualizando el id en el bean fabricante.
+     * Inserta en base de datos el nuevo fabricante, actualizando el ID en el bean fabricante.
      */
     @Override
     public synchronized void create(Producto producto) {
@@ -75,7 +75,7 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
 
             int rows = ps.executeUpdate();
             if (rows == 0)
-                System.out.println("INSERT de fabricante con 0 filas insertadas.");
+                System.out.println("INSERT de producto con 0 filas insertadas.");
 
             rsGenKeys = ps.getGeneratedKeys();
             if (rsGenKeys.next())
@@ -91,7 +91,7 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
     }
 
     /**
-     * Devuelve lista con todos loa fabricantes.
+     * Devuelve lista con todos los fabricantes.
      */
     @Override
     public List<Producto> getAll() {
@@ -227,7 +227,7 @@ public class ProductoDAOImpl extends AbstractDAOImpl implements ProductoDAO {
             int rows = ps.executeUpdate();
 
             if (rows == 0)
-                System.out.println("Delete de fabricante con 0 registros eliminados.");
+                System.out.println("Delete de usuario con 0 registros eliminados.");
 
         } catch (SQLException e) {
             e.printStackTrace();

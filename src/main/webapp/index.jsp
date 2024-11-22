@@ -10,8 +10,9 @@
             align-items: center;
             justify-content: center;
         }
+        <%@include file="WEB-INF/jsp/fragmentos/estilos.jspf" %>
     </style>
-    <%@include file="WEB-INF/jsp/fragmentos/estilos.jspf" %>
+
 </head>
 <body>
 
@@ -25,6 +26,7 @@
             <a class="btn btn-primary btn-lg"
                href="<%=application.getContextPath()%>/tienda/fabricantes">FABRICANTES</a>
             <a class="btn btn-success btn-lg" href="<%=application.getContextPath()%>/tienda/productos">PRODUCTOS</a>
+            <a class="btn btn-danger btn-lg" href="<%=application.getContextPath()%>/tienda/usuarios">USUARIOS</a>
         </div>
     </section>
 </main>
