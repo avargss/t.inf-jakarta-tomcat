@@ -32,93 +32,98 @@
 <%@ include file="/WEB-INF/jsp/fragmentos/header.jspf" %>
 <%@ include file="/WEB-INF/jsp/fragmentos/nav.jspf" %>
 
-<div id="contenedora" style="float:none; margin: 0 auto; width: 900px;">
-    <div class="clearfix">
-        <div style="float: left; width: 50%">
-            <h1>Fabricantes</h1>
-        </div>
-        <div style="float: none; width: auto; overflow: hidden; min-height: 80px; position: relative;">
-            <div style="position: absolute; left: 39%; top: 39%;">
-                <form action="${pageContext.request.contextPath}/tienda/fabricantes/crear">
-                    <input type="submit" value="Crear">
-                </form>
+<main>
+    <section>
+        <div id="contenedora" style="float:none; margin: 0 auto; width: 900px;">
+            <div class="clearfix">
+                <div style="float: left; width: 50%">
+                    <h1>Fabricantes</h1>
+                </div>
+                <div style="float: none; width: auto; overflow: hidden; min-height: 80px; position: relative;">
+                    <div style="position: absolute; left: 39%; top: 39%;">
+                        <form action="${pageContext.request.contextPath}/tienda/fabricantes/crear">
+                            <input type="submit" value="Crear">
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="clearfix">
-        <hr/>
-    </div>
+            <div class="clearfix">
+                <hr/>
+            </div>
 
-    <div class="clearfix">
-        <div style="float: left; width: 25%">Código</div>
-        <div style="float: left; width: 25%">Nombre</div>
-        <div style="float: left; width: 25%">Cantidad</div>
-        <div style="float: none; width: auto; overflow: hidden;">Acción</div>
-    </div>
+            <div class="clearfix">
+                <div style="float: left; width: 10%">Código</div>
+                <div style="float: left; width: 30%">Nombre</div>
+                <div style="float: left; width: 20%">Cantidad</div>
+                <div style="float: none; width: 20%; overflow: hidden;">Acción</div>
+            </div>
 
-    <div class="clearfix">
-        <hr/>
-    </div>
+            <div class="clearfix">
+                <hr/>
+            </div>
 
-    <%
+                <%
         if (request.getAttribute("listaFabricantes") != null) {
             List<FabricanteDTO> listaFabricante = (List<FabricanteDTO>) request.getAttribute("listaFabricantes");
 
             for (FabricanteDTO fabricante : listaFabricante) {
     %>
 
-    <div style="margin-top: 6px;" class="clearfix">
-        <div style="float: left; width: 25%">
-            <%= fabricante.getIdFabricante() %>
-        </div>
-        <div style="float: left; width: 25%">
-            <%= fabricante.getNombre() %>
-        </div>
-        <div style="float: left; width: 25%">
-            <%= fabricante.getNumProducto() %>
-        </div>
-        <div style="float: none; width: auto; overflow: hidden;">
-            <form action="${pageContext.request.contextPath}/tienda/fabricantes/<%= fabricante.getIdFabricante() %>"
-                  style="display: inline;">
-                <input type="submit" value="Ver Detalle"/>
-            </form>
-            <form action="${pageContext.request.contextPath}/tienda/fabricantes/editar/<%= fabricante.getIdFabricante() %>"
-                  style="display: inline;">
-                <input type="submit" value="Editar"/>
-            </form>
-            <form action="${pageContext.request.contextPath}/tienda/fabricantes/borrar/" method="post"
-                  style="display: inline;">
-                <input type="hidden" name="__method__" value="delete"/>
-                <input type="hidden" name="codigo" value="<%= fabricante.getIdFabricante() %>"/>
-                <input type="submit" value="Eliminar"/>
-            </form>
-        </div>
-    </div>
+            <div style="margin-top: 6px;" class="clearfix">
+                <div style="float: left; width: 10%">
+                    <%= fabricante.getIdFabricante() %>
+                </div>
+                <div style="float: left; width: 30%">
+                    <%= fabricante.getNombre() %>
+                </div>
+                <div style="float: left; width: 20%">
+                    <%= fabricante.getNumProducto() %>
+                </div>
+                <div style="float: none; width: auto; overflow: hidden;">
+                    <form action="${pageContext.request.contextPath}/tienda/fabricantes/<%= fabricante.getIdFabricante() %>"
+                          style="display: inline;">
+                        <input type="submit" value="Ver Detalle"/>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/tienda/fabricantes/editar/<%= fabricante.getIdFabricante() %>"
+                          style="display: inline;">
+                        <input type="submit" value="Editar"/>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/tienda/fabricantes/borrar/" method="post"
+                          style="display: inline;">
+                        <input type="hidden" name="__method__" value="delete"/>
+                        <input type="hidden" name="codigo" value="<%= fabricante.getIdFabricante() %>"/>
+                        <input type="submit" value="Eliminar"/>
+                    </form>
+                </div>
+            </div>
 
-    <%
+                <%
         }
     } else {
     %>
-    No hay registros de fabricante
+            No hay registros de fabricante
     <% } %>
+    </section>
+</main>
 
-    <form method="get" action="${pageContext.request.contextPath}/tienda/fabricantes/">
-        <fieldset>
-            <legend>Ordenar por</legend>
-            <select name="ordenarPor" id="ordenarPor">
-                <option value="nombre">Nombre</option>
-                <option value="codigo">Código</option>
-            </select>
 
-            <select name="modoOrdenar" id="modoOrdenar">
-                <option value="asc">Ascendente</option>
-                <option value="desc">Descendente</option>
-            </select>
+<form method="get" action="${pageContext.request.contextPath}/tienda/fabricantes/">
+    <fieldset>
+        <legend>Ordenar por</legend>
+        <select name="ordenarPor" id="ordenarPor">
+            <option value="nombre">Nombre</option>
+            <option value="codigo">Código</option>
+        </select>
 
-            <button type="submit" id="botonFinal">Aplicarlo</button>
-        </fieldset>
-    </form>
+        <select name="modoOrdenar" id="modoOrdenar">
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+        </select>
+
+        <button type="submit" id="botonFinal">Aplicarlo</button>
+    </fieldset>
+</form>
 </div>
 
 <%@ include file="/WEB-INF/jsp/fragmentos/footer.jspf" %>

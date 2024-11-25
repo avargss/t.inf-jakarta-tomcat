@@ -11,6 +11,7 @@
     <a href="${pageContext.request.contextPath}">HOME</a>
     <a href="${pageContext.request.contextPath}/tienda/fabricantes">Frabricantes</a>
     <a href="${pageContext.request.contextPath}/tienda/productos">Producto</a>
+    <a href="${pageContext.request.contextPath}/tienda/usuarios">Usuarios</a>
     <div class="menu-log">
         <a href="#login">LOGIN</a>
     </div>

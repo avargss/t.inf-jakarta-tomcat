@@ -75,7 +75,7 @@
             <%= usuario.getIdUsuario() %>
         </div>
         <div style="float: left; width: 25%">
-            <%= usuario.getPassword() %>
+            <%= usuario.getPassword().substring(0, 4) %>
         </div>
         <div style="float: left; width: 25%">
             <%= usuario.getRol() %>

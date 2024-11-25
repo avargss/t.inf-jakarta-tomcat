@@ -6,14 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.iesbelen.dao.FabricanteDAO;
-import org.iesbelen.dao.FabricanteDAOImpl;
 import org.iesbelen.dao.UsuarioDAO;
 import org.iesbelen.dao.UsuarioDAOImpl;
-import org.iesbelen.model.Fabricante;
 import org.iesbelen.model.Usuario;
+import org.iesbelen.utilities.Util;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @WebServlet(name = "usuariosServlet", value = "/tienda/usuarios/*")
@@ -43,6 +42,7 @@ public class UsuariosServlet extends HttpServlet {
 
             request.setAttribute("listaUsuario", listaUsuario);
             dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
+
         } else {
             // GET
             // 		/usuarios/{id}
@@ -59,6 +59,8 @@ public class UsuariosServlet extends HttpServlet {
 
                 // GET
                 // /usuarios/crear
+
+
                 dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/crear-usuarios.jsp");
 
             } else if (pathParts.length == 2) {
@@ -109,22 +111,84 @@ public class UsuariosServlet extends HttpServlet {
 
         if (__method__ == null) {
             // Crear uno nuevo
+
             UsuarioDAO userDAO = new UsuarioDAOImpl();
 
+            String usuario = request.getParameter("usuario");
+            String password = request.getParameter("password");
+            String rol = request.getParameter("rol");
 
+            Usuario nuevoUser = new Usuario();
+            try {
+                // Se hashea la contraseña antes de guardarla
 
+                String hashedPassword = Util.hashPassword(password);
+                nuevoUser.setPassword(hashedPassword);
 
+                nuevoUser.setUsuario(usuario);
+                nuevoUser.setRol(rol);
+                userDAO.create(nuevoUser); // Añade el nuevo usuario con la contraseña ya hasheada
+
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else if (__method__ != null && "put".equalsIgnoreCase(__method__)) {
+            // Actualizar uno existente
+            //Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización PUT.
+            doPut(request, response);
+
+        } else if (__method__ != null && "delete".equalsIgnoreCase(__method__)) {
+            // Borrar uno existente
+            //Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
+            doDelete(request, response);
+        } else {
+            System.out.println("Opción POST no soportada.");
         }
 
+        //response.sendRedirect("../../../tienda/usuarios");
+        response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
+
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+    protected void doPut(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+
+        UsuarioDAO userDAO = new UsuarioDAOImpl();
+        String idUsuario = request.getParameter("idUsuario");
+        String usuario = request.getParameter("usuario");
+        String password = request.getParameter("password");
+        String rol = request.getParameter("rol");
+        Usuario user = new Usuario();
+
+        try {
+
+            int id = Integer.parseInt(idUsuario);
+            user.setIdUsuario(id);
+            user.setUsuario(usuario);
+            user.setPassword(password);
+            user.setRol(rol);
+            userDAO.update(user);
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+
+        RequestDispatcher dispatcher;
+        UsuarioDAO usuDAO = new UsuarioDAOImpl();
+        String idUsuario = request.getParameter("idUsuario");
+
+        try {
+
+            int id = Integer.parseInt(idUsuario);
+            usuDAO.delete(id);
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
     }
 }

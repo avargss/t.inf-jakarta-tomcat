@@ -27,10 +27,19 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             ps.setString(2, usuario.getPassword());
             ps.setString(3, usuario.getRol());
 
-            int rows = ps.executeUpdate();
+            /*if (rol.isBlank())
+                rol = "cliente";
+            else if (!rol.equals("admin") || (!rol.equals("vendedor")))
+            rol = "cliente";*/
 
+            int rows = ps.executeUpdate();
             if (rows == 0) {
                 System.out.println("Error: no se insertaron filas en la tabla usuarios.");
+            }
+
+            rsGenKeys = ps.getGeneratedKeys();
+            if (rsGenKeys.next()) {
+                usuario.setIdUsuario(rsGenKeys.getInt(1)); // Asigna la id que he generado al usuario
             }
 
         } catch (SQLException e) {
@@ -174,4 +183,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             closeDb(conn, ps, rs);
         }
     }
+
+
 }
+
