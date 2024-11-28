@@ -53,6 +53,8 @@ public class UsuariosServlet extends HttpServlet {
             // 		/usuarios/edit/{id}/
             // 		/usuarios/crear
             // 		/usuarios/crear/
+            //      /usuarios/login
+            //      /usuarios/login
 
             pathInfo = pathInfo.replaceAll("/$", "");
             String[] pathParts = pathInfo.split("/");
@@ -151,6 +153,26 @@ public class UsuariosServlet extends HttpServlet {
             // Borrar uno existente
             // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
             doDelete(request, response);
+
+        } else if (__method__ != null && "login".equalsIgnoreCase(__method__)) {
+            // Login
+            // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
+
+            UsuarioDAO userDAO = new UsuarioDAOImpl();
+            String usuario = request.getParameter("usuario");
+            String password = request.getParameter("password");
+
+            try {
+                String password2 = Util.hashPassword(password);
+                Optional<Usuario> userOptional = userDAO.findLogin;
+
+
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+
+
         } else {
             System.out.println("Opción POST no soportada.");
         }

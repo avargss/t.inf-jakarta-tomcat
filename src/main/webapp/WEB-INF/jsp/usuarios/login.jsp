@@ -29,17 +29,56 @@
 
 <div id="contenedora" style="float:none; margin: 0 auto; width: 900px;">
 
-    <div>
-        <label for="username">Nombre de usuario:</label>
-        <input type="text" id="username" name="username" required>
+    <div class="clearfix">
+        <div style="float: left; width: 50%">
+            <h1 class="header mt-5">Iniciar Sesion</h1>
+        </div>
+
+        <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
+
+            <div style="position: absolute; left: 39%; top : 39%;">
+
+                <form action="${pageContext.request.contextPath}/tienda/usuarios">
+                    <input type="submit" value="Volver"/>
+                </form>
+            </div>
+
+        </div>
+
     </div>
-    <div>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <button type="submit">Iniciar sesión</button>
-    </div>
+
+    <hr>
+
+    <form action="${pageContext.request.contextPath}//tienda/usuarios/login" method="post">
+        <div style="margin-top: 6px;" class="clearfix">
+            <div style="float: left;width: 50%">
+                Usuario
+            </div>
+
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input type="text" name="usuario" required pattern="[A-Za-z0-9]+"
+                       title="Solo se permiten letras y números"/>
+            </div>
+        </div>
+
+        <div style="margin-top: 6px;" class="clearfix">
+
+            <div style="float: left;width: 50%">
+                Password
+            </div>
+
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input type="password" minlength="6" title="minimo 6 caracteres" name="password" required/>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <input type="hidden" name="__method__" value="login">
+            <button class="button bg-primary text-white mt-5" type="submit" name="inicioSesion">Iniciar
+            </button>
+        </div>
+
+    </form>
 
     <%@ include file="/WEB-INF/jsp/fragmentos/footer.jspf" %>
 
