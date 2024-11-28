@@ -13,7 +13,9 @@ import org.iesbelen.utilities.Util;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet(name = "usuariosServlet", value = "/tienda/usuarios/*")
 public class UsuariosServlet extends HttpServlet {
@@ -71,7 +73,10 @@ public class UsuariosServlet extends HttpServlet {
                 // /usuarios/{id}
 
                 try {
-                    request.setAttribute("usuario", userDAO.find(Integer.parseInt(pathParts[1])));
+                    int id = Integer.parseInt(pathParts[1]); // almaceno la id
+                    Optional<Usuario> usuario = userDAO.find(id);
+
+                    request.setAttribute("usuario", usuario);
                     dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/detalle-usuarios.jsp");
 
                 } catch (NumberFormatException nfe) {
@@ -118,6 +123,8 @@ public class UsuariosServlet extends HttpServlet {
             String password = request.getParameter("password");
             String rol = request.getParameter("rol");
 
+            System.out.printf(usuario);
+
             Usuario nuevoUser = new Usuario();
             try {
                 // Se hashea la contraseña antes de guardarla
@@ -129,18 +136,20 @@ public class UsuariosServlet extends HttpServlet {
                 nuevoUser.setRol(rol);
                 userDAO.create(nuevoUser); // Añade el nuevo usuario con la contraseña ya hasheada
 
+                System.out.printf(nuevoUser.toString());
+
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
 
         } else if (__method__ != null && "put".equalsIgnoreCase(__method__)) {
             // Actualizar uno existente
-            //Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización PUT.
+            // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización PUT.
             doPut(request, response);
 
         } else if (__method__ != null && "delete".equalsIgnoreCase(__method__)) {
             // Borrar uno existente
-            //Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
+            // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
             doDelete(request, response);
         } else {
             System.out.println("Opción POST no soportada.");
@@ -166,11 +175,11 @@ public class UsuariosServlet extends HttpServlet {
             int id = Integer.parseInt(idUsuario);
             user.setIdUsuario(id);
             user.setUsuario(usuario);
-            user.setPassword(password);
+            user.setPassword(Util.hashPassword(password));
             user.setRol(rol);
             userDAO.update(user);
 
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException | NoSuchAlgorithmException nfe) {
             nfe.printStackTrace();
         }
     }

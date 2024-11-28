@@ -27,11 +27,6 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             ps.setString(2, usuario.getPassword());
             ps.setString(3, usuario.getRol());
 
-            /*if (rol.isBlank())
-                rol = "cliente";
-            else if (!rol.equals("admin") || (!rol.equals("vendedor")))
-            rol = "cliente";*/
-
             int rows = ps.executeUpdate();
             if (rows == 0) {
                 System.out.println("Error: no se insertaron filas en la tabla usuarios.");
@@ -58,7 +53,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
         Statement s = null;
         ResultSet rs = null;
 
-        List<Usuario> listUsers = new ArrayList<>();
+        List<Usuario> listaUsuarios = new ArrayList<>();
 
         try {
             conn = connectDB();
@@ -67,7 +62,6 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             s = conn.createStatement();
 
             rs = s.executeQuery("SELECT * FROM usuarios");
-
             while (rs.next()) {
                 Usuario user = new Usuario();
                 int idx = 1;
@@ -75,7 +69,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
                 user.setUsuario(rs.getString(idx++));
                 user.setPassword(rs.getString(idx++));
                 user.setRol(rs.getString(idx));
-                listUsers.add(user);
+                listaUsuarios.add(user);
             }
 
         } catch (SQLException e) {
@@ -85,7 +79,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
         } finally {
             closeDb(conn, s, rs);
         }
-        return listUsers;
+        return listaUsuarios;
 
     }
 
@@ -112,7 +106,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
                 user.setIdUsuario(rs.getInt(idx++));
                 user.setUsuario(rs.getString(idx++));
                 user.setPassword(rs.getString(idx++));
-                user.setRol(rs.getString(idx));
+                user.setRol(rs.getString(idx++));
 
                 return Optional.of(user);
             }
@@ -142,11 +136,12 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             ps.setString(idx++, usuario.getUsuario());
             ps.setString(idx++, usuario.getPassword());
             ps.setString(idx, usuario.getRol());
+            ps.setInt(idx++, usuario.getIdUsuario());
 
             int rows = ps.executeUpdate();
 
             if (rows == 0)
-                System.out.println("Update de producto con 0 registros actualizados.");
+                System.out.println("Update de usuario con 0 registros actualizados.");
 
         } catch (SQLException e) {
             e.printStackTrace();

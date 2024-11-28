@@ -1,9 +1,5 @@
 package org.iesbelen.model;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 public class Usuario {
 
     private int idUsuario;

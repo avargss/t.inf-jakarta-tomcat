@@ -35,7 +35,6 @@ public class FabricantesServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher dispatcher;
-
         String pathInfo = request.getPathInfo(); //
 
         if (pathInfo == null || "/".equals(pathInfo)) {

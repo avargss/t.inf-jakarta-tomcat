@@ -15,12 +15,6 @@
             display: block;
             clear: both;
         }
-
-        #contenedor {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
     </style>
 
     <%@ include file="../fragmentos/estilos.jspf" %>
@@ -61,8 +55,8 @@
     </div>
 
     <%
-        if (request.getAttribute("listaUsuarios") != null) {
-            List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listaUsuarios");
+        if (request.getAttribute("listaUsuario") != null) {
+            List<Usuario> listaUsuarios = (List<Usuario>) request.getAttribute("listaUsuario");
 
             for (Usuario usuario : listaUsuarios) {
     %>
@@ -72,7 +66,7 @@
             <%= usuario.getIdUsuario() %>
         </div>
         <div style="float: left; width: 25%">
-            <%= usuario.getIdUsuario() %>
+            <%= usuario.getUsuario() %>
         </div>
         <div style="float: left; width: 25%">
             <%= usuario.getPassword().substring(0, 4) %>
@@ -102,7 +96,7 @@
         }
     } else {
     %>
-    No hay registros de fabricante
+    No hay registros de usuarios
     <% } %>
 
 </div>
