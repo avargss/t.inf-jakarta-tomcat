@@ -11,6 +11,9 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <%@ include file="../fragmentos/estilos.jspf" %>
+
     <style>
         .clearfix::after {
             content: "";
@@ -18,8 +21,6 @@
             clear: both;
         }
     </style>
-
-    <%@ include file="../fragmentos/estilos.jspf" %>
 
 </head>
 <body>
@@ -33,23 +34,11 @@
         <div style="float: left; width: 50%">
             <h1 class="header mt-5">Iniciar Sesion</h1>
         </div>
-
-        <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
-
-            <div style="position: absolute; left: 39%; top : 39%;">
-
-                <form action="${pageContext.request.contextPath}/tienda/usuarios">
-                    <input type="submit" value="Volver"/>
-                </form>
-            </div>
-
-        </div>
-
     </div>
 
     <hr>
 
-    <form action="${pageContext.request.contextPath}//tienda/usuarios/login" method="post">
+    <form action="${pageContext.request.contextPath}/tienda/usuarios/login" method="post">
         <div style="margin-top: 6px;" class="clearfix">
             <div style="float: left;width: 50%">
                 Usuario

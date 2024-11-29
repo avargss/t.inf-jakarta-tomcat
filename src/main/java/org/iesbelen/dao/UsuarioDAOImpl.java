@@ -135,7 +135,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             ps = conn.prepareStatement("SELECT * FROM usuarios WHERE usuario = ?");
 
             int idx = 1;
-            ps.setInt(idx, usuario);
+            ps.setString(idx, usuario);
 
             rs = ps.executeQuery();
 

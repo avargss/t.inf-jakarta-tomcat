@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.iesbelen.dao.UsuarioDAO;
 import org.iesbelen.dao.UsuarioDAOImpl;
 import org.iesbelen.model.Usuario;
@@ -43,7 +44,7 @@ public class UsuariosServlet extends HttpServlet {
             List<Usuario> listaUsuario = userDAO.getAll();
 
             request.setAttribute("listaUsuario", listaUsuario);
-            dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
+            dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
 
         } else {
             // GET
@@ -54,7 +55,7 @@ public class UsuariosServlet extends HttpServlet {
             // 		/usuarios/crear
             // 		/usuarios/crear/
             //      /usuarios/login
-            //      /usuarios/login
+            //      /usuarios/login/
 
             pathInfo = pathInfo.replaceAll("/$", "");
             String[] pathParts = pathInfo.split("/");
@@ -64,8 +65,12 @@ public class UsuariosServlet extends HttpServlet {
                 // GET
                 // /usuarios/crear
 
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/crear-usuario.jsp");
 
-                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/crear-usuarios.jsp");
+            } else if (pathParts.length == 2 && "login".equals(pathParts[1])) {
+                // GET
+                // /usuarios/login
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/login.jsp");
 
             } else if (pathParts.length == 2) {
 
@@ -79,12 +84,14 @@ public class UsuariosServlet extends HttpServlet {
                     Optional<Usuario> usuario = userDAO.find(id);
 
                     request.setAttribute("usuario", usuario);
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/detalle-usuarios.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/detalle-usuario.jsp");
 
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
                 }
+
+
             } else if (pathParts.length == 3 && "editar".equals(pathParts[1])) {
                 UsuarioDAO userDAO = new UsuarioDAOImpl();
 
@@ -93,16 +100,16 @@ public class UsuariosServlet extends HttpServlet {
 
                 try {
                     request.setAttribute("usuario", userDAO.find(Integer.parseInt(pathParts[2])));
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/editar-usuarios.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/editar-usuario.jsp");
 
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
                 }
 
             } else {
                 System.out.println("Opción POST no soportada.");
-                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
             }
         }
 
@@ -164,21 +171,43 @@ public class UsuariosServlet extends HttpServlet {
 
             try {
                 String password2 = Util.hashPassword(password);
-                Optional<Usuario> userOptional = userDAO.findLogin;
+                Optional<Usuario> userOptional = userDAO.findLogin(usuario);
 
+                System.out.println("Password hasheada de entrada: " + password);
+                System.out.println("Password almacenada en la bbdd: " + userOptional.get().getPassword());
+
+                if (userOptional.get().getPassword().equals(password2)) {
+                    if (userOptional.isPresent()) {
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("usuario-logado", userOptional.get());
+
+                        // Redirigimos al index
+                        response.sendRedirect(request.getContextPath() + "/index.jsp");
+                        return;
+
+                    } else {
+                        request.setAttribute("error", "Usuario o contraseña incorrectos.");
+                    }
+                }
 
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
 
+        } else if ("logout".equalsIgnoreCase(__method__)) {
+            // Logout
+            // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
 
+            HttpSession session=request.getSession();
+            session.invalidate();
 
+            response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
         } else {
             System.out.println("Opción POST no soportada.");
         }
 
         //response.sendRedirect("../../../tienda/usuarios");
-        response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
+        //response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
 
     }
 
@@ -207,7 +236,8 @@ public class UsuariosServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws
+            ServletException, IOException {
 
         RequestDispatcher dispatcher;
         UsuarioDAO usuDAO = new UsuarioDAOImpl();
