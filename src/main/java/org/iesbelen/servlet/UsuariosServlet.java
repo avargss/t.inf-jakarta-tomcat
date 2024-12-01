@@ -44,7 +44,7 @@ public class UsuariosServlet extends HttpServlet {
             List<Usuario> listaUsuario = userDAO.getAll();
 
             request.setAttribute("listaUsuario", listaUsuario);
-            dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
+            dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
 
         } else {
             // GET
@@ -65,7 +65,7 @@ public class UsuariosServlet extends HttpServlet {
                 // GET
                 // /usuarios/crear
 
-                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/crear-usuario.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/crear-usuarios.jsp");
 
             } else if (pathParts.length == 2 && "login".equals(pathParts[1])) {
                 // GET
@@ -84,11 +84,11 @@ public class UsuariosServlet extends HttpServlet {
                     Optional<Usuario> usuario = userDAO.find(id);
 
                     request.setAttribute("usuario", usuario);
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/detalle-usuario.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/detalle-usuarios.jsp");
 
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
                 }
 
 
@@ -100,16 +100,16 @@ public class UsuariosServlet extends HttpServlet {
 
                 try {
                     request.setAttribute("usuario", userDAO.find(Integer.parseInt(pathParts[2])));
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/editar-usuario.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/editar-usuarios.jsp");
 
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
                 }
 
             } else {
                 System.out.println("Opción POST no soportada.");
-                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuario.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/usuarios/usuarios.jsp");
             }
         }
 
