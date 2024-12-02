@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<div id="contenedora" style="float:none; margin: 0 auto;width: 900px;" >
+<div id="contenedora" style="float:none; margin: 0 auto;width: 900px;">
     <form action="${pageContext.request.contextPath}/tienda/usuarios/crear/" method="post">
         <div class="clearfix">
             <div style="float: left; width: 50%">
@@ -40,19 +40,19 @@
                 Usuario
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input name="usuario" />
+                <input name="usuario"/>
             </div>
             <div style="float: left;width: 50%">
                 Password
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input name="password" />
+                <input name="password"/>
             </div>
             <div style="float: left;width: 50%">
                 Rol
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input name="rol" />
+                <input name="rol"/>
             </div>
         </div>
 

@@ -103,7 +103,7 @@
     } else {
     %>
             No hay registros de fabricante
-    <% } %>
+                <% } %>
     </section>
 </main>
 

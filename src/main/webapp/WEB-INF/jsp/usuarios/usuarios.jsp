@@ -43,11 +43,13 @@
     </div>
 
     <div class="clearfix">
-        <div style="float: left; width: 25%">ID_USUARIO</div>
-        <div style="float: left; width: 25%">USUARIO</div>
-        <div style="float: left; width: 25%">PASSWORD</div>
-        <div style="float: none; width: auto; overflow: hidden;">ROL</div>
+        <div style="float: left; width: 20%;">idUsuario</div>
+        <div style="float: left; width: 20%;">Usuario</div>
+        <div style="float: left; width: 20%;">Password</div>
+        <div style="float: left; width: 20%;">Rol</div>
+        <div style="float: none; width: 20%; overflow: hidden">Acción</div>
     </div>
+
 
     <div class="clearfix">
         <hr/>
@@ -60,36 +62,39 @@
             for (Usuario usuario : listaUsuarios) {
     %>
 
-    <div style="margin-top: 6px;" class="clearfix">
-        <div style="float: left; width: 25%">
+    <div style="display: flex; align-items: center; margin-top: 6px; gap: 10px;">
+        <div style="flex: 1; text-align: left;">
             <%= usuario.getIdUsuario() %>
         </div>
-        <div style="float: left; width: 25%">
+        <div style="flex: 1; text-align: left;">
             <%= usuario.getUsuario() %>
         </div>
-        <div style="float: left; width: 25%">
+        <div style="flex: 1; text-align: left;">
             <%= usuario.getPassword().substring(0, 4) %>
         </div>
-        <div style="float: left; width: 25%">
+        <div style="flex: 1; text-align: left;">
             <%= usuario.getRol() %>
         </div>
-        <div style="float: none; width: auto; overflow: hidden;">
-            <form action="${pageContext.request.contextPath}/tienda/usuarios/<%= usuario.getIdUsuario() %>"
-                  style="display: inline;">
-                <input type="submit" value="Ver Detalle"/>
-            </form>
-            <form action="${pageContext.request.contextPath}/tienda/usuarios/editar/<%= usuario.getIdUsuario() %>"
-                  style="display: inline;">
-                <input type="submit" value="Editar"/>
-            </form>
-            <form action="${pageContext.request.contextPath}/tienda/usuarios/borrar/" method="post"
-                  style="display: inline;">
-                <input type="hidden" name="__method__" value="delete"/>
-                <input type="hidden" name="codigo" value="<%= usuario.getIdUsuario() %>"/>
-                <input type="submit" value="Eliminar"/>
-            </form>
+        <div style="flex: 1; text-align: left;">
+            <div style="display: flex; gap: 5px;">
+                <form action="${pageContext.request.contextPath}/tienda/usuarios/<%= usuario.getIdUsuario() %>"
+                      style="display: inline;">
+                    <input type="submit" value="Ver Detalle"/>
+                </form>
+                <form action="${pageContext.request.contextPath}/tienda/usuarios/editar/<%= usuario.getIdUsuario() %>"
+                      style="display: inline;">
+                    <input type="submit" value="Editar"/>
+                </form>
+                <form action="${pageContext.request.contextPath}/tienda/usuarios/borrar/" method="post"
+                      style="display: inline;">
+                    <input type="hidden" name="__method__" value="delete"/>
+                    <input type="hidden" name="codigo" value="<%= usuario.getIdUsuario() %>"/>
+                    <input type="submit" value="Eliminar"/>
+                </form>
+            </div>
         </div>
     </div>
+
 
     <%
         }

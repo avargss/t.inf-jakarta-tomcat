@@ -207,7 +207,7 @@ public class UsuariosServlet extends HttpServlet {
         }
 
         //response.sendRedirect("../../../tienda/usuarios");
-        //response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
+        response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
 
     }
 
@@ -236,15 +236,12 @@ public class UsuariosServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws
-            ServletException, IOException {
-
+    protected void doDelete(HttpServletRequest request, HttpServletResponse resp) {
         RequestDispatcher dispatcher;
         UsuarioDAO usuDAO = new UsuarioDAOImpl();
         String idUsuario = request.getParameter("idUsuario");
 
         try {
-
             int id = Integer.parseInt(idUsuario);
             usuDAO.delete(id);
 
