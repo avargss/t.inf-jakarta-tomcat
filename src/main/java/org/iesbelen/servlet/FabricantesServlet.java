@@ -211,7 +211,6 @@ public class FabricantesServlet extends HttpServlet {
 
         try {
             int id = Integer.parseInt(codigo);
-
             fabDAO.delete(id);
 
         } catch (NumberFormatException nfe) {

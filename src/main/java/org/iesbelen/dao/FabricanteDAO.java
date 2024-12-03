@@ -7,15 +7,19 @@ import org.iesbelen.model.Fabricante;
 import org.iesbelen.model.FabricanteDTO;
 
 public interface FabricanteDAO {
-		
-	public void create(Fabricante fabricante);
-	public List<Fabricante> getAll();
-	public Optional<Fabricante> find(int id);
-	public void update(Fabricante fabricante);
-	public void delete(int id);
 
-	//Ampliación CRUD:
-	public Optional<Integer> getCountProductos(int id);
+    public void create(Fabricante fabricante);
 
-	public List<FabricanteDTO> getAllDTOPlusCountProductos();
+    public List<Fabricante> getAll();
+
+    public Optional<Fabricante> find(int id);
+
+    public void update(Fabricante fabricante);
+
+    public void delete(int id);
+
+    //Ampliación CRUD:
+    public Optional<Integer> getCountProductos(int id);
+
+    public List<FabricanteDTO> getAllDTOPlusCountProductos();
 }
