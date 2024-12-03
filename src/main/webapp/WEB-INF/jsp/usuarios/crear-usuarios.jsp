@@ -52,7 +52,10 @@
                 Rol
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input name="rol" />
+                <select name="rol">
+                    <option name="admin">Admin</option>
+                    <option name="usuario">Usuario</option>
+                </select>
             </div>
         </div>
 

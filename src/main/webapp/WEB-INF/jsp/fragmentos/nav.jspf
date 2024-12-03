@@ -32,8 +32,11 @@
         <%
         } else {
         %>
-        <div>   <a class="btn btn-warning btn-lg"
-                href="<%=application.getContextPath()%>/tienda/usuarios/login">LOGIN</a></div>
+
+        <div>
+            <a class="btn btn-warning btn-lg" href="<%=application.getContextPath()%>/tienda/usuarios/login">LOGIN</a>
+        </div>
+
         <%
             }
         %>

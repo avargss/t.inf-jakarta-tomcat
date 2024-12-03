@@ -201,7 +201,7 @@ public class UsuariosServlet extends HttpServlet {
             HttpSession session=request.getSession();
             session.invalidate();
 
-            response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
+            response.sendRedirect(request.getContextPath());
         } else {
             System.out.println("Opción POST no soportada.");
         }
