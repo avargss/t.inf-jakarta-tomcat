@@ -145,8 +145,6 @@ public class UsuariosServlet extends HttpServlet {
                 nuevoUser.setRol(rol);
                 userDAO.create(nuevoUser); // Añade el nuevo usuario con la contraseña ya hasheada
 
-                System.out.printf(nuevoUser.toString());
-
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
@@ -163,7 +161,7 @@ public class UsuariosServlet extends HttpServlet {
 
         } else if (__method__ != null && "login".equalsIgnoreCase(__method__)) {
             // Login
-            // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización DELETE.
+            // Dado que los forms de html solo soportan method GET y POST utilizo parámetro oculto para indicar la operación de actulización LOGIN.
 
             UsuarioDAO userDAO = new UsuarioDAOImpl();
             String usuario = request.getParameter("usuario");

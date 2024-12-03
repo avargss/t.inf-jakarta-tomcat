@@ -93,23 +93,6 @@
                 </form>
             </div>
         </div>
-
-        <div style="float: none; width: auto; overflow: hidden;">
-            <form action="${pageContext.request.contextPath}/tienda/usuarios/<%= usuario.getUsuario() %>"
-                  style="display: inline;">
-                <input type="submit" value="Ver Detalle"/>
-            </form>
-            <form action="${pageContext.request.contextPath}/tienda/usuarios/editar/<%= usuario.getPassword() %>"
-                  style="display: inline;">
-                <input type="submit" value="Editar"/>
-            </form>
-            <form action="${pageContext.request.contextPath}/tienda/usuarios/borrar/" method="post"
-                  style="display: inline;">
-                <input type="hidden" name="__method__" value="delete"/>
-                <input type="hidden" name="codigo" value="<%= usuario.getRol() %>"/>
-                <input type="submit" value="Eliminar"/>
-            </form>
-        </div>
     </div>
 
 
