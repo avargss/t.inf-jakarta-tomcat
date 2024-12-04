@@ -44,6 +44,14 @@
 
         <div style="margin-top: 6px;" class="clearfix">
             <div style="float: left;width: 50%">
+                <label>idUsuario</label>
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input name="idUsuario" value="<%= optUser.get().getIdUsuario() %>" readonly="readonly"/>
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div style="float: left;width: 50%">
                 <label>Usuario</label>
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
@@ -63,7 +71,10 @@
                 <label>Rol</label>
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input name="rol" value="<%= optUser.get().getRol() %>"/>
+                <select name="rol" value="<%= optUser.get().getRol() %>">
+                    <option name="admin">Admin</option>
+                    <option name="usuario">Usuario</option>
+                </select>
             </div>
         </div>
 

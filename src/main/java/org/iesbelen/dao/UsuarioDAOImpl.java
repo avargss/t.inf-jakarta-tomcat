@@ -170,7 +170,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
         try {
             conn = connectDB();
 
-            ps = conn.prepareStatement("UPDATE usuarios SET nombre = ?,password = ?, rol = ?  WHERE idUsuario = ?");
+            ps = conn.prepareStatement("UPDATE usuarios SET usuario = ?,password = ?, rol = ?  WHERE idUsuario = ?");
             int idx = 1;
             ps.setString(idx++, usuario.getUsuario());
             ps.setString(idx++, usuario.getPassword());
@@ -208,7 +208,7 @@ public class UsuarioDAOImpl extends AbstractDAOImpl implements UsuarioDAO {
             int rows = ps.executeUpdate();
 
             if (rows == 0)
-                System.out.println("Delete de usuario con 0 registros eliminados.");
+                System.out.println("Delete de Usuario con 0 registros eliminados.");
 
         } catch (SQLException e) {
             e.printStackTrace();
