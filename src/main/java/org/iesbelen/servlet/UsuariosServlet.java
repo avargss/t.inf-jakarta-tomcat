@@ -132,8 +132,6 @@ public class UsuariosServlet extends HttpServlet {
             String password = request.getParameter("password");
             String rol = request.getParameter("rol");
 
-            System.out.printf(usuario);
-
             Usuario nuevoUser = new Usuario();
             try {
                 // Se hashea la contraseña antes de guardarla
@@ -205,7 +203,7 @@ public class UsuariosServlet extends HttpServlet {
         }
 
         //response.sendRedirect("../../../tienda/usuarios");
-        response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
+        // response.sendRedirect(request.getContextPath() + "/tienda/usuarios");
 
     }
 

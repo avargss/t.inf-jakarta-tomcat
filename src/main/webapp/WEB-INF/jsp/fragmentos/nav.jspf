@@ -17,10 +17,10 @@
     <div class="menu-log">
 
         <%
-            Optional<Usuario> usu = Optional.ofNullable((Usuario) session.getAttribute("usuario-logado"));
-            if (usu.isPresent()) {
+            Optional<Usuario> user = Optional.ofNullable((Usuario) session.getAttribute("usuario-logado"));
+            if (user.isPresent()) {
         %>
-        <h3><%= usu.get().getUsuario()%></h3>
+        <h3><%= user.get().getUsuario()%></h3>
         <div>
             <form action="<%=application.getContextPath()%>/tienda/usuarios/logout/" method="POST">
                 <input type="hidden" name="__method__" value="logout"/>

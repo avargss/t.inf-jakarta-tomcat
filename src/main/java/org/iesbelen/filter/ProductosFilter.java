@@ -25,14 +25,14 @@ import org.iesbelen.model.Usuario;
         initParams = {
                 @WebInitParam(name = "acceso-concedido-a-rol", value = "administrador")
         })
-public class UsuariosFilter extends HttpFilter implements Filter {
+public class ProductosFilter extends HttpFilter implements Filter {
 
     private String rolAcceso;
 
     /**
      * @see HttpFilter#HttpFilter()
      */
-    public UsuariosFilter() {
+    public ProductosFilter() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -72,9 +72,9 @@ public class UsuariosFilter extends HttpFilter implements Filter {
             chain.doFilter(request, response);
             return;
 
-        } else if (url.endsWith("/usuarios/crear")
-                || url.contains("/usuarios/editar")
-                || url.contains("/usuarios/borrar")) {
+        } else if (url.endsWith("/productos/crear")
+                || url.contains("/productos/editar")
+                || url.contains("/productos/borrar")) {
 
             // Usuario no administrador trata de acceder a páginas de crear y editar, y el filtro lo redirige a login
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/tienda/usuarios/login");
@@ -82,9 +82,9 @@ public class UsuariosFilter extends HttpFilter implements Filter {
 
         } else {
 
-            // Otras rutas /usuarios y /usuarios/{id} se dan paso a cualquier rol
+            // Otras rutas /productos y /productos/{id} se dan paso a cualquier rol
 
-            //RequestDispatcher dispatcher = httpRequest.getRequestDispatcher("/WEB-INF/jsp/usuarios.jsp");
+            //RequestDispatcher dispatcher = httpRequest.getRequestDispatcher("/WEB-INF/jsp/productos.jsp");
             //dispatcher.forward(httpRequest, httpResponse);
             chain.doFilter(request, response);
             return;

@@ -1,5 +1,6 @@
 <%@ page import="org.iesbelen.model.Usuario" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.iesbelen.dao.UsuarioDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -81,6 +82,12 @@
                       style="display: inline;">
                     <input type="submit" value="Ver Detalle"/>
                 </form>
+
+                <% if (session.getAttribute("usuario") != null) {
+                Usuario logged = (Usuario) session.getAttribute("usuario");
+
+                if ("administrador".equals(logged.getRol())) {
+                %>
                 <form action="${pageContext.request.contextPath}/tienda/usuarios/editar/<%= usuario.getIdUsuario() %>"
                       style="display: inline;">
                     <input type="submit" value="Editar"/>
@@ -91,6 +98,9 @@
                     <input type="hidden" name="idUsuario" value="<%= usuario.getIdUsuario() %>"/>
                     <input type="submit" value="Eliminar"/>
                 </form>
+
+                <% }
+                } %>
             </div>
         </div>
     </div>

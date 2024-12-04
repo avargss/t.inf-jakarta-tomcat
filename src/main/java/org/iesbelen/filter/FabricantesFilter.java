@@ -1,10 +1,12 @@
 package org.iesbelen.filter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -25,14 +27,14 @@ import org.iesbelen.model.Usuario;
         initParams = {
                 @WebInitParam(name = "acceso-concedido-a-rol", value = "administrador")
         })
-public class UsuariosFilter extends HttpFilter implements Filter {
+public class FabricantesFilter extends HttpFilter implements Filter {
 
     private String rolAcceso;
 
     /**
      * @see HttpFilter#HttpFilter()
      */
-    public UsuariosFilter() {
+    public FabricantesFilter() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -66,15 +68,15 @@ public class UsuariosFilter extends HttpFilter implements Filter {
 
         if (session != null  //Seteo inline de usuario
                 && (usuario = (Usuario) session.getAttribute("usuario-logado")) != null
-                && "administrador".equals(usuario.getRol())) {
+                && "admin".equals(usuario.getRol())) {
 
             //Si eres administrador acceso a cualquier página del filtro
             chain.doFilter(request, response);
             return;
 
-        } else if (url.endsWith("/usuarios/crear")
-                || url.contains("/usuarios/editar")
-                || url.contains("/usuarios/borrar")) {
+        } else if (url.endsWith("/fabricantes/crear")
+                || url.contains("/fabricantes/editar")
+                || url.contains("/fabricantes/borrar")) {
 
             // Usuario no administrador trata de acceder a páginas de crear y editar, y el filtro lo redirige a login
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/tienda/usuarios/login");
@@ -82,9 +84,9 @@ public class UsuariosFilter extends HttpFilter implements Filter {
 
         } else {
 
-            // Otras rutas /usuarios y /usuarios/{id} se dan paso a cualquier rol
+            // Otras rutas /fabricantes y /fabricantes/{id} se dan paso a cualquier rol
 
-            //RequestDispatcher dispatcher = httpRequest.getRequestDispatcher("/WEB-INF/jsp/usuarios.jsp");
+            //RequestDispatcher dispatcher = httpRequest.getRequestDispatcher("/WEB-INF/jsp/fabricantes.jsp");
             //dispatcher.forward(httpRequest, httpResponse);
             chain.doFilter(request, response);
             return;
